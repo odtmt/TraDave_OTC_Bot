@@ -1,25 +1,38 @@
 import os
-from dotenv import load_dotenv
-from telegram import Update
-from telegram.ext import ApplicationBuilder, CommandHandler, ContextTypes
-
-load_dotenv()
-
-TOKEN = os.getenv("TELEGRAM_BOT_TOKEN")
+import requests
 
 
-async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
-    await update.message.reply_text("🤖 OTC Bot is running!")
+TELEGRAM_BOT_TOKEN = os.getenv("TELEGRAM_BOT_TOKEN")
+TELEGRAM_CHAT_ID = os.getenv("TELEGRAM_CHAT_ID")
 
 
-def main():
-    app = ApplicationBuilder().token(TOKEN).build()
+def send_telegram_message(text: str):
+    """
+    Sends a message to Telegram using Bot API.
+    """
 
-    app.add_handler(CommandHandler("start", start))
+    if not TELEGRAM_BOT_TOKEN or not TELEGRAM_CHAT_ID:
+        print("❌ Telegram credentials missing in environment variables")
+        return False
 
-    print("Bot is running...")
-    app.run_polling()
+    url = f"https://api.telegram.org/bot{TELEGRAM_BOT_TOKEN}/sendMessage"
 
+    payload = {
+        "chat_id": TELEGRAM_CHAT_ID,
+        "text": text,
+        "parse_mode": "HTML"
+    }
 
-if __name__ == "__main__":
-    main()
+    try:
+        response = requests.post(url, data=payload, timeout=10)
+
+        if response.status_code == 200:
+            print("📲 Telegram message sent successfully")
+            return True
+        else:
+            print(f"❌ Telegram error: {response.text}")
+            return False
+
+    except Exception as e:
+        print(f"❌ Telegram exception: {str(e)}")
+        return False

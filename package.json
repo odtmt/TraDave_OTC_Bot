@@ -1,16 +1,13 @@
 {
-  "name": "tradave_otc_bot",
+  "name": "tradave-otc-bot",
   "version": "1.0.0",
+  "description": "TraDave OTC Trading Bot",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node index.js"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "description": "",
   "dependencies": {
-    "dotenv": "^17.4.2",
-    "express": "^5.2.1"
+    "dotenv": "^16.6.1",
+    "express": "^5.1.0"
   }
 }

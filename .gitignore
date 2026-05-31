@@ -1,0 +1,10 @@
+node_modules/
+venv/
+
+.env
+.env.*
+
+backend/notifications/firebase-key.json
+
+firebase_key. json/
+*firebase-adminsdk*.json

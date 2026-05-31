@@ -1,0 +1,23 @@
+version: "3.8"
+
+services:
+
+  bot:
+    build: ..
+    restart: always
+
+  api:
+    build: ..
+    command: python -m backend.api.server
+    ports:
+      - "8000:8000"
+    restart: always
+
+  db:
+    image: postgres
+    environment:
+      POSTGRES_DB: tradave_db
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: password
+    ports:
+      - "5432:5432"

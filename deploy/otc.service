@@ -1,0 +1,14 @@
+[Unit]
+Description=TraDave OTC Bot
+After=network.target
+
+[Service]
+WorkingDirectory=/root/TraDave_OTC_bot
+ExecStart=/usr/bin/python3 -m backend.engine.realtime_engine
+Restart=always
+RestartSec=5
+User=root
+Environment=PYTHONUNBUFFERED=1
+
+[Install]
+WantedBy=multi-user.target
